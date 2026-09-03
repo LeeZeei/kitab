@@ -464,7 +464,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       <input type="hidden" id="moduleEditTarget" value="">
       <div class="module-form-grid">
         <label>Nama Kitab / Modul<input id="moduleTitle" required maxlength="100" placeholder="Contoh: Fathul Mu'in"></label>
-        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://vaozee.github.io/modul/"></label>
+        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://leezeei.github.io/modul/"></label>
       </div>
       <div class="module-form-grid">
         <label>Bagian<select id="moduleSection"><option value="kitab" selected>01 · Kitab Klasik</option><option value="umum">02 · Umum &amp; Hiburan</option></select></label>
@@ -511,23 +511,23 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 <script>
 const kitab=[
- {n:"01",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"ألف",badge:"NAHWU",url:"https://vaozee.github.io/alfiah/",desc:"Kumpulan ±1.002 bait nazham yang merangkum kaidah nahwu dan sharaf, disusun mengikuti urutan bab kitab."},
- {n:"02",title:"Al-'Imrithi",cat:"nahwu",icon:"نحو",badge:"NAHWU",url:"https://vaozee.github.io/imrithi/",desc:"Modul nahwu lanjutan berbasis nazham Al-'Imrithi untuk memperkuat pemahaman kaidah bahasa Arab."},
- {n:"03",title:"Al-Ajurumiyah",cat:"nahwu",icon:"جروم",badge:"NAHWU",url:"https://vaozee.github.io/ajurumiyah/",desc:"Pembelajaran matan Al-Ajurumiyah sebagai fondasi ilmu nahwu dengan tampilan belajar yang ringkas dan interaktif."},
- {n:"04",title:"Ilmu Shorof",cat:"sharaf",icon:"صرف",badge:"SHARAF",url:"https://vaozee.github.io/shorof/",desc:"Pembelajaran ilmu sharaf, termasuk pola Tsulasi Mujarrad dan Tsulasi Mazid untuk memahami perubahan bentuk kata."},
- {n:"05",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"مقص",badge:"SHARAF",url:"https://vaozee.github.io/maqsud/",desc:"Modul shorof lanjutan berbasis Nazham Al-Maqshūd, disusun sebagai materi kajian yang lebih mendalam."},
- {n:"06",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"☾",badge:"FALAK",url:"https://vaozee.github.io/falak1/",desc:"Modul pembelajaran ilmu falak lanjutan untuk kajian hisab dan astronomi Islam."},
- {n:"07",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"فرائض",badge:"FARĀ'IḌ",url:"https://vaozee.github.io/faroid/",desc:"Kajian kitab 'Uddatul Farīḍ dengan teks asli sebagai materi pembelajaran ilmu waris Islam."},
- {n:"08",title:"Hisab Falakiyah",cat:"lain",icon:"☽",badge:"FALAK",url:"https://vaozee.github.io/falak/",desc:"Kalkulator astronomi Islam untuk kebutuhan hisab falakiyah dan berbagai perhitungan terkait."},
- {n:"09",title:"Kalkulator Ahli Waris",cat:"lain",icon:"۞",badge:"FARAIDH",url:"https://vaozee.github.io/waris/",desc:"Kalkulator pembagian warisan Islam berbasis kaidah faraidh dengan hasil perhitungan yang terstruktur."}
+ {n:"01",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"ألف",badge:"NAHWU",url:"https://leezeei.github.io/alfiah/",desc:"Kumpulan ±1.002 bait nazham yang merangkum kaidah nahwu dan sharaf, disusun mengikuti urutan bab kitab."},
+ {n:"02",title:"Al-'Imrithi",cat:"nahwu",icon:"نحو",badge:"NAHWU",url:"https://leezeei.github.io/imrithi/",desc:"Modul nahwu lanjutan berbasis nazham Al-'Imrithi untuk memperkuat pemahaman kaidah bahasa Arab."},
+ {n:"03",title:"Al-Ajurumiyah",cat:"nahwu",icon:"جروم",badge:"NAHWU",url:"https://leezeei.github.io/ajurumiyah/",desc:"Pembelajaran matan Al-Ajurumiyah sebagai fondasi ilmu nahwu dengan tampilan belajar yang ringkas dan interaktif."},
+ {n:"04",title:"Ilmu Shorof",cat:"sharaf",icon:"صرف",badge:"SHARAF",url:"https://leezeei.github.io/shorof/",desc:"Pembelajaran ilmu sharaf, termasuk pola Tsulasi Mujarrad dan Tsulasi Mazid untuk memahami perubahan bentuk kata."},
+ {n:"05",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"مقص",badge:"SHARAF",url:"https://leezeei.github.io/maqsud/",desc:"Modul shorof lanjutan berbasis Nazham Al-Maqshūd, disusun sebagai materi kajian yang lebih mendalam."},
+ {n:"06",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"☾",badge:"FALAK",url:"https://leezeei.github.io/falak1/",desc:"Modul pembelajaran ilmu falak lanjutan untuk kajian hisab dan astronomi Islam."},
+ {n:"07",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"فرائض",badge:"FARĀ'IḌ",url:"https://leezeei.github.io/faroid/",desc:"Kajian kitab 'Uddatul Farīḍ dengan teks asli sebagai materi pembelajaran ilmu waris Islam."},
+ {n:"08",title:"Hisab Falakiyah",cat:"lain",icon:"☽",badge:"FALAK",url:"https://leezeei.github.io/falak/",desc:"Kalkulator astronomi Islam untuk kebutuhan hisab falakiyah dan berbagai perhitungan terkait."},
+ {n:"09",title:"Kalkulator Ahli Waris",cat:"lain",icon:"۞",badge:"FARAIDH",url:"https://leezeei.github.io/waris/",desc:"Kalkulator pembagian warisan Islam berbasis kaidah faraidh dengan hasil perhitungan yang terstruktur."}
 ];
 const umum=[
- {n:"10",title:"Kalkulator Pajak Indonesia",icon:"₿",badge:"UMUM",url:"https://vaozee.github.io/pajak/",desc:"Kumpulan perhitungan pajak Indonesia dalam satu alat bantu praktis."},
- {n:"11",title:"Jam",icon:"◷",badge:"WAKTU",url:"https://vaozee.github.io/jam/",desc:"Utilitas waktu sederhana untuk kebutuhan sehari-hari."},
- {n:"12",title:"Peta Potensi Air Tanah",icon:"💧",badge:"UTILITAS",url:"https://vaozee.github.io/air/",desc:"Peta potensi air tanah untuk membantu perencanaan lokasi sumur bor."},
- {n:"13",title:"Nadaflow",icon:"♫",badge:"HIBURAN",url:"https://vaozee.github.io/musik/",desc:"Pemutar musik dan lirik dengan antarmuka sederhana."},
- {n:"14",title:"VAOZEE IO",icon:"⌘",badge:"SISTEM",url:"https://vaozee.github.io/io/",desc:"Halaman indeks sistem VAOZEE dan pintu masuk menuju berbagai modul."},
- {n:"15",title:"Suite Launcher",icon:"✦",badge:"LAUNCHER",url:"https://vaozee.github.io/promo/",desc:"Satu pintu untuk mengakses kumpulan aplikasi dan modul VAOZEE."}
+ {n:"10",title:"Kalkulator Pajak Indonesia",icon:"₿",badge:"UMUM",url:"https://leezeei.github.io/pajak/",desc:"Kumpulan perhitungan pajak Indonesia dalam satu alat bantu praktis."},
+ {n:"11",title:"Jam",icon:"◷",badge:"WAKTU",url:"https://leezeei.github.io/jam/",desc:"Utilitas waktu sederhana untuk kebutuhan sehari-hari."},
+ {n:"12",title:"Peta Potensi Air Tanah",icon:"💧",badge:"UTILITAS",url:"https://leezeei.github.io/air/",desc:"Peta potensi air tanah untuk membantu perencanaan lokasi sumur bor."},
+ {n:"13",title:"Nadaflow",icon:"♫",badge:"HIBURAN",url:"https://leezeei.github.io/musik/",desc:"Pemutar musik dan lirik dengan antarmuka sederhana."},
+ {n:"14",title:"VAOZEE IO",icon:"⌘",badge:"SISTEM",url:"https://leezeei.github.io/io/",desc:"Halaman indeks sistem VAOZEE dan pintu masuk menuju berbagai modul."},
+ {n:"15",title:"Suite Launcher",icon:"✦",badge:"LAUNCHER",url:"https://leezeei.github.io/promo/",desc:"Satu pintu untuk mengakses kumpulan aplikasi dan modul VAOZEE."}
 ];
 function card(x,dispN){
  const shown=dispN||x.n;
