@@ -183,6 +183,18 @@ h1 .gradient{background:linear-gradient(100deg,#8a5f1f,#c9972c 45%,#e3c377 85%);
 .card:hover .corner.bl{transform:scaleY(-1) scale(1.06)}
 .card:hover .corner.br{transform:scale(-1,-1) scale(1.06)}
 
+/* tombol "buka di tab baru" pada tiap kotak modul -- solusi untuk peramban yang
+   tidak bisa/tidak mengizinkan tampilan iframe (lihat juga #iframeEscapeHint) */
+.card-newtab{position:absolute;top:12px;right:12px;z-index:3;width:28px;height:28px;border-radius:50%;
+ border:1px solid rgba(179,129,44,.32);background:rgba(253,249,238,.88);color:var(--gold-deep);
+ font-size:.82rem;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;
+ box-shadow:0 6px 16px rgba(90,64,20,.16);opacity:0;transform:translateY(-2px);
+ transition:opacity .18s ease,transform .18s ease,background .18s ease,border-color .18s ease}
+.card:hover .card-newtab,.card:focus-within .card-newtab{opacity:1;transform:translateY(0)}
+.card-newtab:hover,.card-newtab:focus-visible{background:var(--gold);color:#fdf6e6;border-color:transparent;outline:none}
+@media(hover:none){.card-newtab{opacity:1;transform:none}}
+.grid.compact .card-newtab{top:auto;bottom:8px;right:8px;width:22px;height:22px;font-size:.68rem}
+
 .divider{display:flex;align-items:center;gap:14px;margin:30px 0}
 .divider .dline{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
 .divider .gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 0 4px rgba(179,129,44,.1);flex:none}
@@ -278,6 +290,10 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .tools-menu .menu-item:hover{background:rgba(179,129,44,.12);color:var(--gold-deep)}
 .tools-menu .menu-item.active{background:rgba(179,129,44,.16);color:var(--gold-deep)}
 .tools-menu-label{padding:6px 11px 7px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep)}
+/* "Buka di Tab Baru" sudah ada sebagai tombol ↗ langsung di header (#newTabQuick) --
+   item yang sama di dalam droplist ini disembunyikan supaya tidak dobel. Elemennya
+   tetap ada di HTML (JS masih mengisi href-nya) hanya disembunyikan dari tampilan. */
+#toolsMenu #newTab{display:none!important}
 .modal.pdf-mode .tools-menu{background:rgba(24,22,18,.95);border-color:rgba(255,255,255,.14)}
 .modal.pdf-mode .tools-menu .menu-item{color:#f3ead4}
 .modal.pdf-mode .tools-menu .menu-item:hover,.modal.pdf-mode .tools-menu .menu-item.active{background:rgba(255,255,255,.12);color:#fff}
@@ -315,6 +331,22 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .modal-frame-wrap.zoom-mode .zoom-hint{opacity:1}
 .modal.pdf-mode #zoomToggle{display:none!important}
 
+/* === Bantuan keluar saat iframe bermasalah ===
+   Sengaja dibuat sebagai pita KECIL yang tidak menutupi iframe sama sekali (bukan
+   overlay penuh) -- supaya tidak ada risiko menutupi/menyembunyikan modul yang
+   sebenarnya berhasil tampil normal. Selalu ada juga tombol ↗ permanen di header
+   modal (#newTabQuick) dan di setiap kotak modul (.card-newtab) sebagai jalan
+   keluar langsung tanpa bergantung pada deteksi otomatis apa pun. */
+.iframe-escape-hint{position:absolute;left:50%;bottom:18px;transform:translate(-50%,14px);z-index:9;
+ display:flex;align-items:center;gap:10px;max-width:min(92%,460px);
+ background:rgba(43,32,19,.92);color:#fdf6e6;padding:10px 12px 10px 16px;border-radius:999px;
+ box-shadow:0 14px 34px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.iframe-escape-hint.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.iframe-escape-hint span{font-size:.72rem;font-weight:600;line-height:1.3}
+.iframe-escape-hint .btn{padding:8px 13px;font-size:.7rem;white-space:nowrap;flex:none}
+.iframe-escape-hint .ieh-close{flex:none;width:22px;height:22px;border:0;border-radius:50%;background:rgba(255,255,255,.14);
+ color:#fdf6e6;cursor:pointer;font-size:.8rem;line-height:1;display:grid;place-items:center}
+.iframe-escape-hint .ieh-close:hover{background:rgba(255,255,255,.26)}
 
 /* Module 01-09: frame visible over the full-screen page, including all 4 existing corner artworks. */
 .module-frame-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -392,6 +424,10 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   flex:none;
   max-width:calc(100vw - 92px);
 }
+/* Header modul/iframe dibuat ringkas: hanya tombol, tanpa judul halaman,
+   supaya semua tombol muat rapi dalam 1 baris. Elemen judul tetap ada di HTML
+   (JS masih mengisi teksnya) hanya disembunyikan dari tampilan. */
+.modal-capsule-left{display:none!important}
 .modal-capsule:not(.minimized) .modal-actions{
   gap:5px!important;
 }
@@ -650,6 +686,11 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <div class="mf-corner bl"></div><div class="mf-corner br"></div>
   </div>
   <iframe id="frame" title="Modul VAOZEE" referrerpolicy="no-referrer"></iframe>
+  <div class="iframe-escape-hint" id="iframeEscapeHint" aria-hidden="true">
+    <span>Modul tidak tampil dengan benar di sini?</span>
+    <a class="btn primary" id="iboOpenBtn" target="_blank" rel="noopener">Buka di Tab Baru ↗</a>
+    <button type="button" class="ieh-close" id="iehClose" aria-label="Tutup">×</button>
+  </div>
   <div class="zoom-overlay" id="zoomOverlay" aria-hidden="true"></div>
   <div class="zoom-hint">Cubit 2 jari untuk zoom · geser 1 jari untuk baca · ganda-tap / tombol 🔍 untuk keluar</div>
   <div class="pdf-scroll-stage" id="pdfScrollStage" aria-hidden="true"><div class="pdf-scroll-pages" id="pdfScrollPages"></div></div>
@@ -678,6 +719,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
           </div>
         </div>
         <button class="icon-btn fs-btn" id="fsBtnModal" title="Layar penuh">⛶</button>
+        <a class="icon-btn" id="newTabQuick" target="_blank" rel="noopener" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</a>
         <button class="icon-btn danger" id="closeModal" title="Tutup">×</button>
       </div>
     </div>
@@ -772,14 +814,30 @@ function card(x,dispN){
  const sourceLabel=online?'ONLINE':'OFFLINE';
  return `<a href="${escAttr(href)}" class="card" data-url="${escAttr(online)}" data-local-url="${escAttr(local)}" data-title="${escAttr(x.title)}" data-cat="${escAttr(x.cat||'umum')}" data-n="${escAttr(x.n)}" data-source="${sourceLabel}">
    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+   <button type="button" class="card-newtab" data-newtab-url="${escAttr(href)}" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</button>
    <div class="card-top"><span class="num">MODUL ${shown}</span><span class="badge">${x.badge}</span></div>
    <div class="icon">${x.icon}</div>
    <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
    <div class="card-bottom"><span class="path">${online?(new URL(online).pathname.replaceAll('/','')||'/'):local}</span><span class="open">${online&&local?'Online / Offline →':'Buka →'}</span></div>
  </a>`;
 }
+/* Tombol ↗ di pojok kotak modul: buka URL modul langsung di tab baru peramban,
+   tanpa lewat iframe sama sekali -- jalan pintas untuk peramban yang iframe-nya
+   diblokir/dibatasi. stopPropagation dipasang di elemen tombolnya sendiri
+   (bukan lewat delegasi ke dokumen) supaya event berhenti SEBELUM sempat
+   membuka modal iframe milik kartu (anchor) yang membungkusnya. */
+function bindCardNewTabButtons(root){
+ (root||document).querySelectorAll('.card-newtab').forEach(btn=>{
+   btn.addEventListener('click',e=>{
+     e.preventDefault();e.stopPropagation();
+     const url=btn.getAttribute('data-newtab-url');
+     if(url&&url!=='#')window.open(url,'_blank','noopener');
+   });
+ });
+}
 document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
 document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
+bindCardNewTabButtons();
 
 function updateModuleCounters(){
  const kitabCount=document.querySelectorAll('#kitabGrid .card').length;
@@ -790,7 +848,48 @@ function updateModuleCounters(){
 updateModuleCounters();
 
 /* ---- fullscreen module viewer ---- */
-const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), loader=document.getElementById('loader');
+const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), newTabQuick=document.getElementById('newTabQuick'), loader=document.getElementById('loader');
+const iframeEscapeHint=document.getElementById('iframeEscapeHint'), iboOpenBtn=document.getElementById('iboOpenBtn'), iehClose=document.getElementById('iehClose');
+
+/* === Jalan keluar kalau iframe bermasalah ===
+   CATATAN PENTING (setelah dua kali dicoba dan ternyata malah merusak modul yang
+   sebenarnya berhasil tampil): membaca isi/URL dokumen di dalam iframe untuk
+   "menebak" apakah navigasinya diblokir TERNYATA TIDAK BISA diandalkan -- banyak
+   modul di sini adalah halaman berat yang kontennya baru terisi belakangan lewat
+   JS, dan cara membaca dokumen iframe lewat JS punya banyak kasus tepi yang beda
+   di tiap peramban/perangkat. Menebak salah lalu memaksa iframe pindah ke sumber
+   lain justru menyebabkan modul yang tadinya berhasil ikut rusak / muncul "page
+   not found" sungguhan.
+   Karena itu pendekatannya diubah total: TIDAK ADA lagi pemeriksaan otomatis
+   yang membaca isi iframe atau memaksa iframe pindah alamat sendiri. Sebagai
+   gantinya disediakan jalan keluar yang selalu berhasil dan tidak pernah salah
+   duga:
+   1) Tombol ↗ permanen di setiap kotak modul (.card-newtab) dan di header modal
+      (#newTabQuick) -- klik kapan saja, tidak bergantung pada deteksi apa pun.
+   2) Event 'error' bawaan iframe (dipicu peramban sendiri untuk kegagalan
+      jaringan yang nyata) tetap ditangani -- ini sinyal asli dari peramban,
+      bukan tebakan kita.
+   3) Pita kecil "Modul tidak tampil dengan benar?" muncul otomatis beberapa
+      detik setelah modul dibuka, TANPA menutupi iframe dan TANPA memindahkan
+      src iframe sama sekali -- murni ajakan, pengguna sendiri yang menilai lalu
+      klik kalau memang perlu. Kalau modulnya berhasil tampil, pita ini tidak
+      mengganggu apa pun dan bisa ditutup. */
+function hideEscapeHint(){
+ if(!iframeEscapeHint)return;
+ iframeEscapeHint.classList.remove('show');
+ iframeEscapeHint.setAttribute('aria-hidden','true');
+}
+function scheduleEscapeHint(url){
+ clearTimeout(frame._escapeHintTimer);
+ if(!iframeEscapeHint||!iboOpenBtn)return;
+ iboOpenBtn.href=url;
+ frame._escapeHintTimer=setTimeout(()=>{
+   iframeEscapeHint.classList.add('show');
+   iframeEscapeHint.setAttribute('aria-hidden','false');
+ },4500);
+}
+iehClose&&iehClose.addEventListener('click',hideEscapeHint);
+
 function openModule(url,title,fromHistory=false,localUrl=''){
  const onlineUrl=dashboardValidUrl(url);
  const offlineUrl=localUrl||'';
@@ -805,6 +904,7 @@ function openModule(url,title,fromHistory=false,localUrl=''){
     tetap berdiri sendiri, hanya "ditonton" lewat src iframe (relatif ke folder ini
     untuk file offline, atau URL penuh untuk yang online). */
  function show(target,usedOnline){
+   hideEscapeHint();
    /* Batalkan timer "kosongkan iframe" tertunda dari closeModule() sebelumnya --
       kalau tidak, modul yang baru saja dibuka bisa tiba-tiba dikosongkan lagi. */
    clearTimeout(frame._closeBlankTimer);
@@ -825,6 +925,8 @@ function openModule(url,title,fromHistory=false,localUrl=''){
    if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
    modalTitle.textContent=title;
    newTab.href=target;
+   if(newTabQuick)newTabQuick.href=target;
+   scheduleEscapeHint(target);
    modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
 
    const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
@@ -863,15 +965,33 @@ function closeModule(fromPopState=false){
  if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
  clearTimeout(frame._closeBlankTimer);
  frame._closeBlankTimer=setTimeout(()=>{frame.src='about:blank'},220);
+ clearTimeout(frame._escapeHintTimer);
+ hideEscapeHint();
  document.body.style.overflow='';
  if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
  if(!fromPopState && history.state && history.state.vaozeeModule) history.back();
 }
-frame.addEventListener('load',()=>{loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer)});
+frame.addEventListener('load',()=>{
+  loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer);
+});
 frame.addEventListener('error',()=>{
+  /* Sinyal asli dari peramban (bukan tebakan kita) bahwa navigasi iframe gagal
+     total -- mis. file lokal yang benar-benar tidak ada. */
   const local=frame.dataset.fallbackLocal;
-  if(local && frame.src!==new URL(local,location.href).href){
+  let resolvedLocal='';
+  try{resolvedLocal=new URL(local||'',location.href).href}catch(e){}
+  if(local && frame.src!==resolvedLocal){
+    frame.dataset.fallbackLocal='';
     frame.src=local;
+  }else{
+    /* Tidak ada sumber lain yang bisa dicoba -- segera tawarkan jalan keluar
+       (bukan menunggu 4.5 detik seperti biasanya) karena ini kegagalan nyata. */
+    clearTimeout(frame._escapeHintTimer);
+    if(iframeEscapeHint&&iboOpenBtn){
+      iboOpenBtn.href=frame.src;
+      iframeEscapeHint.classList.add('show');
+      iframeEscapeHint.setAttribute('aria-hidden','false');
+    }
   }
 });
 document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)}));
@@ -1300,6 +1420,7 @@ if('IntersectionObserver' in window){
     [...kitabGrid.querySelectorAll('.card'),...umumGrid.querySelectorAll('.card')].forEach(c=>{
       c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)});
     });
+    if(window.bindCardNewTabButtons)window.bindCardNewTabButtons();
     apply();updateModuleCounters();
   }
 
